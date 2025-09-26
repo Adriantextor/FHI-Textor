@@ -1,8 +1,21 @@
-type Person = {name: string, age: number};
 
-const person1: Person = {
-    name: 'Alice',
-    age: 30
+function bmiIndex(weight: number, height: number){
+    const heightCm: number = height / 100;
+    const heightnadruhu: number = heightCm **2;
+
+    return weight/heightnadruhu;
 }
 
-console.log(person1.name);
+console.log(bmiIndex(100, 198))
+
+
+
+
+function mocnina(a:number, n:number){
+    return a**n;
+}
+console.log(mocnina(-2,5))
+
+
+
+
