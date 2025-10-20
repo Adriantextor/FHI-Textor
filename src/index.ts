@@ -1,160 +1,90 @@
-//1. úloha BMI
-function bmiIndex(weight: number, height: number){
-    const heightCm: number = height / 100;
-    const heightnadruhu: number = heightCm **2;
+import { User } from './classes/User';
+import { Set } from './classes/Set';
+import { Exercise } from './classes/Exercise';
+import { Workout } from './classes/Workout';
+import { WorkoutLog } from './classes/WorkoutLog';
 
-    return weight/heightnadruhu;
-}
-console.log("1. uĺoha BMI", bmiIndex(100, 198), "\n")
+// Vytvorenie používateľov
+const user1 = new User('Ján Novák', 'jan@email.com');
+const user2 = new User('Peter Kováč', 'peter@email.com');
 
+// Workout pre Jána Nováka
+const workout1 = new Workout(user1);
+const benchPress = new Exercise('Bench Press');
+benchPress.addSet(new Set(10, 60));
+benchPress.addSet(new Set(8, 70));
+benchPress.addSet(new Set(6, 80));
+workout1.addExercise(benchPress);
 
-//2. úloha
-function pocetPismen(veta: string){
-    const malaVeta = veta.toLowerCase();
-    const pocet: { [key: string]: number } = {};
+const squat = new Exercise('Squat');
+squat.addSet(new Set(12, 100));
+squat.addSet(new Set(10, 120));
+workout1.addExercise(squat);
 
-    for (const znak of malaVeta) {
+// Workout pre Petra Kováča
+const workout2 = new Workout(user2);
+const deadlift = new Exercise('Deadlift');
+deadlift.addSet(new Set(5, 140));
+deadlift.addSet(new Set(3, 160));
+workout2.addExercise(deadlift);
 
-        if (znak >= 'a' && znak <= 'z') {
+// Log pre oboch používateľov
+const log1 = new WorkoutLog(user1);
+const log2 = new WorkoutLog(user2);
 
-            if (pocet[znak]) {
-                pocet[znak]++;
-            } else {
-                pocet[znak] = 1;
-            }
-        }
-    }
+log1.addWorkout(workout1);
+log2.addWorkout(workout2);
 
-    for (const znak in pocet) {
-        console.log(znak, pocet[znak]);
-    }
-}
-console.log("2. úloha");
-pocetPismen("Alabama");
-console.log("\n");
+// Funkcia na výpis tréningov
+function printWorkoutLog(log: WorkoutLog): void {
+    console.log(`\n📘 Workout log pre používateľa: ${log['user'].getName()}`);
+    console.log('----------------------------------------------------------');
 
-//3. úloha
-function jePalindrom(veta: string): boolean {
-
-    let cistaVeta = veta.toLowerCase().replace(/\s+/g, '');
-    let dlzka = cistaVeta.length;
-
-    for (let i = 0; i < dlzka / 2; i++) {
-        if (cistaVeta[i] !== cistaVeta[dlzka - 1 - i]) {
-            return false;
-        }
-    }
-    return true;
-}
-console.log("3. úloha");
-console.log(jePalindrom("abba"));
-console.log(jePalindrom("nie je palindrom"), "\n");
-
-
-
-
-//4. úloha mocnina
-function mocnina(a:number, n:number){
-    return a**n;
-}
-console.log("4. úloha");
-console.log(mocnina(-2,5))
-console.log("\n");
-
-
-//5. úloha Fibonacci
-
-function fibonacci(pocet: number){
-    let a:number=0;
-    let b:number = 1;
-
-    console.log(a);
-    console.log(b);
-
-    for (let i=2; i<pocet;i++){
-        let nove = a+b;
-        a=b;
-        b=nove;
-        console.log(nove);
-    }
-}
-console.log("5. úloha");
-fibonacci(11);
-console.log("\n");
-
-//6. úloha
-
-function faktorial(vstupn:number){
-
-    if (vstupn <= 0) {
-        console.log("Zadaj celé čislo >0")
+    if (log.totalWorkouts() === 0) {
+        console.log(' Žiadne tréningy');
         return;
     }
-    let vysledok1 = 1;
-    let postup = vstupn + "! = ";
-    for (let i = vstupn; i >= 1; i--) {
-        vysledok1 *= i;
-        postup += i;
-        if (i > 1) {
-            postup += ".";
-        }
-    }
+    // prejde všetky tréningy v logu
+    log.getWorkouts().forEach((workout, index) => {
+        console.log(` Tréning č.${index + 1} (${workout['date'].toLocaleDateString()})`);
 
-    postup += " = " + vysledok1;
-    console.log(postup);
+        // prejde každý cvik
+        workout.getExercises().forEach((exercise) => {
+            console.log(`  • Cvik: ${exercise.getName()}`);
+            console.log(`    Počet sérií: ${exercise['sets'].length}`);
+
+            // prejde jednotlivé série
+            exercise['sets'].forEach((set, i) => {
+                console.log(`      Séria ${i + 1}: ${set.getReps()} opakovaní × ${set.getWeight()} kg`);
+            });
+
+            console.log(`    Celkový objem: ${exercise.totalVolume()} kg`);
+        });
+        console.log(`➡ Celkový objem tréningu: ${workout.totalVolume()} kg`);
+        console.log('');
+    });
 }
-console.log("6. úloha");
-faktorial(5);
-faktorial(0);
-console.log("\n");
 
+// Výpis
+printWorkoutLog(log1);
+printWorkoutLog(log2);
 
-//7. úloha
-function taxi(km:number, cakanievmin:number, znecistenie:string){
-    let zaklSuma:number = 1.50;
-    if (km>5){
-        zaklSuma +=((km-5) * 0.75)
-    }
-    zaklSuma += ((cakanievmin /60)*10);
+// Test vymazania cviku
+console.log('\n Test vymazania cviku "Bench Press" z workout1...');
+console.log(`Počet cvikov pred vymazaním: ${workout1.getExercises().length}`);
+console.log(`Celkový objem pred vymazaním: ${workout1.totalVolume()} kg`);
 
-    if (znecistenie.toLowerCase() === "a"){
-        zaklSuma += 20;
-    }
+workout1.deleteExercise('Bench Press');
 
-    console.log(zaklSuma.toFixed(2)+"eur")
-}
-console.log("7. úloha");
-taxi(15, 5, "n");
-taxi(10, 10, "a");
-console.log("\n");
+console.log(`Počet cvikov po vymazaní: ${workout1.getExercises().length}`);
+console.log(`Celkový objem po vymazaní: ${workout1.totalVolume()} kg`);
+console.log('\nCviky, ktoré ostali:');
+workout1.getExercises().forEach(ex => {
+    console.log(`  - ${ex.getName()}`);
+});
 
-//8. úloha
-function baltimoresky(text:string){
-    const veta: { [key:string]: string} = {
-        "B": "1",
-        "A": "2",
-        "L": "3",
-        "T": "4",
-        "I": "5",
-        "M": "6",
-        "O": "7",
-        "R": "8",
-        "E": "9",
-        "S": "10",
-        "K": "11",
-        "Y": "12"
-    };
-
-    let vysledok2 = ";";
-    for (let znak of text){
-        let velke = znak.toUpperCase();
-        if(veta[velke]){
-            vysledok2 += veta[velke];
-        } else {
-            vysledok2 += znak;
-        }
-    }
-    console.log(vysledok2)
-}
-console.log("8. úloha");
-baltimoresky("To nemyslíze vážne!");
+// Prázdnenie logu
+console.log('\n Vyprázdňujem log Jána Nováka...');
+const emptied = log1.emptyWorkouts();
+console.log('Po vyprázdnení logu:', log1.getWorkouts());
+console.log(`Počet zmazaných tréningov: ${emptied.length}`);
