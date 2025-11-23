@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="sk">
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width,initial-scale=1" />
+    <title>Stats - Fitness App</title>
+
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet"/>
+    <link rel="stylesheet" href="./main.css" />
+</head>
+<body>
+<nav class="navbar navbar-expand-md bg-dark navbar-dark">
+    <div class="container">
+        <a class="navbar-brand" href="#">FitTracker</a>
+    </div>
+</nav>
+
+<main class="container mt-5">
+    <h1>Štatistiky</h1>
+    <p class="text-muted">Základné štatistiky tréningov (celkové trvanie, počet tréningov) — načítava zo servera.</p>
+
+    <div class="row">
+        <div class="col-md-6">
+            <div class="card p-3">
+                <h5>Počet tréningov</h5>
+                <div id="stat-count" class="display-6">—</div>
+            </div>
+        </div>
+        <div class="col-md-6 mt-3 mt-md-0">
+            <div class="card p-3">
+                <h5>Celk. trvanie (min)</h5>
+                <div id="stat-total-duration" class="display-6">—</div>
+            </div>
+        </div>
+    </div>
+</main>
+
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
+<script src="./main.js"></script>
+</body>
+</html>

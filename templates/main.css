@@ -1,0 +1,22 @@
+/* Jednoduché štýly pre fitness app */
+body {
+    background: #fffdfa;
+    min-height: 100vh;
+}
+h1 {
+    font-weight: 700;
+}
+.card {
+    border-radius: 8px;
+}
+#empty-msg {
+    margin-top: 1rem;
+}
+.btn-warning {
+    background: #ffb703;
+    border-color: #ffb703;
+    color: #1b1b1b;
+}
+.display-6 {
+    font-weight: 600;
+}

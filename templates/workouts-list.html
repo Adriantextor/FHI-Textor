@@ -1,0 +1,101 @@
+<!DOCTYPE html>
+<html lang="sk">
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width,initial-scale=1" />
+    <title>Workouts - Fitness App</title>
+
+    <!-- Bootstrap CSS (CDN) -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet"/>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.13.1/font/bootstrap-icons.css" rel="stylesheet"/>
+
+    <link rel="stylesheet" href="./main.css" />
+</head>
+<body>
+<nav class="navbar navbar-expand-md bg-dark navbar-dark">
+    <div class="container">
+        <a class="navbar-brand" href="#">FitTracker</a>
+        <div class="collapse navbar-collapse">
+            <ul class="navbar-nav">
+                <li class="nav-item"><a class="nav-link active" href="workouts-list.html">Workouts</a></li>
+                <li class="nav-item"><a class="nav-link" href="stats.html">Stats</a></li>
+            </ul>
+        </div>
+    </div>
+</nav>
+
+<main class="container mt-5">
+    <div class="d-flex justify-content-between align-items-center mb-3">
+        <h1 class="m-0">Tréningy</h1>
+        <div>
+            <button id="addWorkoutBtn" class="btn btn-warning"><i class="bi bi-plus"></i> Pridať tréning</button>
+        </div>
+    </div>
+
+    <div id="alert-placeholder"></div>
+
+    <div class="card mt-2 shadow-sm">
+        <div class="card-body">
+            <table class="table table-striped" id="workouts-table">
+                <thead>
+                <tr>
+                    <th>#</th>
+                    <th>Dátum</th>
+                    <th>Typ</th>
+                    <th>Trvanie (min)</th>
+                    <th>Poznámka</th>
+                    <th></th>
+                </tr>
+                </thead>
+                <tbody id="workouts-tbody">
+                <!-- rows rendered by JS -->
+                </tbody>
+            </table>
+            <div id="empty-msg" class="text-muted">Žiadne tréningy. Pridaj svoj prvý tréning.</div>
+        </div>
+    </div>
+</main>
+
+<!-- Modal for adding workout -->
+<div class="modal fade" id="workoutModal" tabindex="-1" aria-hidden="true">
+    <div class="modal-dialog">
+        <form id="workoutForm" class="modal-content needs-validation" novalidate>
+            <div class="modal-header">
+                <h5 class="modal-title">Pridať tréning</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Zatvoriť"></button>
+            </div>
+            <div class="modal-body">
+                <div class="mb-3">
+                    <label for="w-date" class="form-label">Dátum</label>
+                    <input id="w-date" name="date" class="form-control" type="date" required />
+                    <div class="invalid-feedback">Zadaj dátum.</div>
+                </div>
+                <div class="mb-3">
+                    <label for="w-type" class="form-label">Typ tréningu</label>
+                    <input id="w-type" name="type" class="form-control" placeholder="napr. Beh, Silový tréning" required />
+                    <div class="invalid-feedback">Zadaj typ tréningu.</div>
+                </div>
+                <div class="mb-3">
+                    <label for="w-duration" class="form-label">Trvanie (min)</label>
+                    <input id="w-duration" name="duration" class="form-control" type="number" min="1" required />
+                    <div class="invalid-feedback">Zadaj trvanie (min).</div>
+                </div>
+                <div class="mb-3">
+                    <label for="w-notes" class="form-label">Poznámka</label>
+                    <textarea id="w-notes" name="notes" class="form-control" rows="2" placeholder="Voliteľné"></textarea>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Zrušiť</button>
+                <button type="submit" class="btn btn-primary">Uložiť</button>
+            </div>
+        </form>
+    </div>
+</div>
+
+<!-- Bootstrap JS (CDN) -->
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
+<!-- App JS -->
+<script src="./main.js"></script>
+</body>
+</html>
